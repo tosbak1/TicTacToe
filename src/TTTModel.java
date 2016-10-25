@@ -4,10 +4,10 @@ import java.util.Observable;
 public class TTTModel extends Observable {
 	private String Board[][];		//2D array to represent the board
 	private int size;				//size of the board 
-	//private int row = 0;	
-	//private int col = 0;
+
 	private boolean turn = false;	//player turn is now set to false
 	private String player = "";
+	private boolean canPlay;
 	private String winningPlayer = "";
 
 	
@@ -16,6 +16,7 @@ public class TTTModel extends Observable {
 		this.size = size;
 		this.Board = new String[size][size];
 		turn = true;		//player turn is set to true;
+		canPlay = true;
 
 	}
 	
@@ -31,26 +32,35 @@ public class TTTModel extends Observable {
 	
 	//a user can play if the value at that block is null 
 	public void play(int x, int y){
-		if(Board[x][y] == null){
-			if(turn){
-				player = "Player1";
-				Board[x][y] = "X";
-				checker();
-			}
-			else{
-				player = "Player2";
-				Board[x][y] = "O";
-				checker();
+		if(canPlay){
+			if(Board[x][y] == null){
+				if(turn){
+					player = "Player1";
+					Board[x][y] = "X";
+					checker();
+				}
+				else{
+					player = "Player2";
+					Board[x][y] = "O";
+					checker();
+				}
 			}
 		}
 		System.out.println(Arrays.deepToString(Board));
+		System.out.println(canPlay);
 
-		this.playerTurn();
+		if(canPlay) { this.playerTurn(); }
+		this.setChanged();
+		this.notifyObservers();
 
 	}
 
 	private void checker() {
 		if(this.playerWon()){
+			canPlay = false;
+			this.setChanged();
+			this.notifyObservers();
+
 			System.out.println("" + player + " has won the game");
 			winningPlayer = player;
 		}
@@ -79,11 +89,29 @@ public class TTTModel extends Observable {
 		return true;
 	}
 	
+	//returns the text for each block
+	public String getText(int x, int y){
+		if(Board[x][y] != null){
+			return Board[x][y];
+		}
+		return "";
+	}
+	
+	
+	//reset the board
+	public void boardReset(){
+		this.Board = new String[size][size];
+		this.canPlay = true;
+		turn = true;		//player turn is set to true;
+		this.setChanged();
+		this.notifyObservers();
+		
+	}
 	//checks the vertical blocks if a user has won
 	public boolean wonVet(){
 		for(int i = 0; i< size; i++){
-			for(int j =0; j<size-1; j++){
-				if((Board[j][i] != (Board[j+1][i]))) return false;
+			for(int j = 0; j<size-1; j++){
+				if(Board[j][i] != Board[j+1][i]) return false;
 				}
 			}
 		return true;
@@ -102,7 +130,8 @@ public class TTTModel extends Observable {
 	
 	//check if a player has won based on a move
 	public boolean playerWon(){
-		if(wonVet() || wonDiag() || wonHor()) return true; 
+		if(wonVet() || wonDiag() || wonHor()){ 
+			return true;} 
 		return false;
 	}
 	

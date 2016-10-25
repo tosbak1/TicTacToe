@@ -10,15 +10,20 @@ public class TTTView extends JFrame implements Observer {
 
 	private ActionListener listener;
 	private JButton[][] buttons;
+	private JButton resetButton;
 	private JFrame frame;
-	private JTextArea area = new JTextArea();
-	private TTTModel md;
 	private JPanel jp;
+	private JPanel jp2;
+
+	private TTTModel md;
+	private int value;
 	
-	public TTTView(TTTModel md, ActionListener al){
-		this.md = md;
-		this.listener = listener;
+	
+	public TTTView(int size, ActionListener al){
+		this.value = size;
+		this.listener = al;
 		jp = new JPanel();
+		jp2 = new JPanel();
 		
 		frame = new JFrame("TicTacToe");
 		frame.setSize(300, 300);
@@ -26,14 +31,25 @@ public class TTTView extends JFrame implements Observer {
 		frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
 	    frame.setLayout(new BorderLayout());
 	    
-	    jp.setLayout(new GridLayout(3,3));
-	    buttons = new JButton[md.getSize()][md.getSize()];
+	    jp.setLayout(new GridLayout(size,size));
+	    buttons = new JButton[size][size];
 	    
-	    for(int i = 0; i< 3; i++){
-	    	for(int j = 0; j<3; j++){
+	    //Reset button
+	    resetButton = new JButton("Resets");
+	    resetButton.addActionListener(listener);
+	    jp2.add(resetButton);
+	    resetButton.setActionCommand("reset");
+	    frame.getContentPane().add(jp2, BorderLayout.SOUTH);
+	    frame.setVisible(true);
+	    
+	    
+	    for(int i = 0; i< size; i++){
+	    	for(int j = 0; j<size; j++){
 	    		buttons[i][j] = new JButton("");
-	    		jp.add(buttons[i][j]);
 	    		buttons[i][j].addActionListener(listener);
+	    		
+	    		jp.add(buttons[i][j]);
+	    		buttons[i][j].setActionCommand("" + i + " " + j);
 	    	}
 	    }
 	    
@@ -42,16 +58,23 @@ public class TTTView extends JFrame implements Observer {
 	}
 	
 	
+	//returns the reset button
+	public JButton getResetButton(){
+		return this.resetButton;
+	}
+	
 	@Override
 	public void update(Observable o, Object arg) {
 		// TODO Auto-generated method stub
+		TTTModel md = (TTTModel)o;
+		for(int i = 0; i< value; i++){
+			for(int j = 0; j <value; j++){
+				buttons[i][j].setText(md.getText(i, j));
+			}
+		}
 		
 	}
 	
-	public static void main(String[] args){
-		TTTModel tm = new TTTModel(3);
-		//ActionListener al = new ActionListener();
-		TTTView tits = new TTTView(tm);
-	}
+
 
 }

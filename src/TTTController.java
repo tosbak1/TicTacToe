@@ -30,8 +30,6 @@ public class TTTController implements ActionListener{
 			int y = Integer.parseInt(moves[1]);
 			
 			tModel.play(x, y);
-			
-		
 	}
 
 }

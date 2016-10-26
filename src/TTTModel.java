@@ -70,24 +70,6 @@ public class TTTModel extends Observable {
 	public String winningPlayer(){
 		return this.winningPlayer;
 	}
-	/*
-	//Returns if a person has won or not
-	public boolean status(){
-		for(int i = 0; i< size; i++){
-			
-		}
-	}
-	*/
-	
-	//checks the horizontal blocks if a user has won
-	public boolean wonHor(){
-		for(int i = 0; i< size; i++){
-			for(int j =0; j<size-1; j++){
-				if((Board[i][j]!=(Board[i][j+1]))) return false;
-				}
-			}
-		return true;
-	}
 	
 	//returns the text for each block
 	public String getText(int x, int y){
@@ -107,11 +89,21 @@ public class TTTModel extends Observable {
 		this.notifyObservers();
 		
 	}
+	
+	//checks the horizontal blocks if a user has won
+	public boolean wonHor(){
+		for(int i = 0; i< size; i++){
+			for(int j =0; j<size-1; j++){
+				if((Board[i][j]!=(Board[i][j+1])) && Board[i][j] != "null") return false;
+				}
+			}
+		return true;
+	}
 	//checks the vertical blocks if a user has won
 	public boolean wonVet(){
 		for(int i = 0; i< size; i++){
 			for(int j = 0; j<size-1; j++){
-				if(Board[j][i] != Board[j+1][i]) return false;
+				if(Board[j][i] != Board[j+1][i] && Board[i][j] != "null") return false;
 				}
 			}
 		return true;

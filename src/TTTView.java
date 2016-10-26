@@ -14,6 +14,8 @@ public class TTTView extends JFrame implements Observer {
 	private JFrame frame;
 	private JPanel jp;
 	private JPanel jp2;
+	
+	private JTextArea area = new JTextArea();
 
 	private TTTModel md;
 	private int value;
@@ -35,10 +37,10 @@ public class TTTView extends JFrame implements Observer {
 	    buttons = new JButton[size][size];
 	    
 	    //Reset button
-	    resetButton = new JButton("Resets");
+	    resetButton = new JButton("Reset");
 	    resetButton.addActionListener(listener);
 	    jp2.add(resetButton);
-	    resetButton.setActionCommand("reset");
+	    //resetButton.setActionCommand("reset");
 	    frame.getContentPane().add(jp2, BorderLayout.SOUTH);
 	    frame.setVisible(true);
 	    

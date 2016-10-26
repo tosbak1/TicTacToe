@@ -28,6 +28,7 @@ public class TTTView extends JFrame implements Observer {
 		jp2 = new JPanel();
 		
 		frame = new JFrame("TicTacToe");
+		area.setSize(300, 200);
 		frame.setSize(300, 300);
 		
 		frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -35,6 +36,7 @@ public class TTTView extends JFrame implements Observer {
 	    
 	    jp.setLayout(new GridLayout(size,size));
 	    buttons = new JButton[size][size];
+	    area.setEditable(false);
 	    
 	    //Reset button
 	    resetButton = new JButton("Reset");

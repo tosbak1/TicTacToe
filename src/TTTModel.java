@@ -37,12 +37,12 @@ public class TTTModel extends Observable {
 				if(turn){
 					player = "Player1";
 					Board[x][y] = "X";
-					checker();
+					checker(x,y);
 				}
 				else{
 					player = "Player2";
 					Board[x][y] = "O";
-					checker();
+					checker(x,y);
 				}
 			}
 		}
@@ -55,8 +55,8 @@ public class TTTModel extends Observable {
 
 	}
 
-	private void checker() {
-		if(this.playerWon()){
+	private void checker(int x, int y) {
+		if(this.playerWon(x,y)){
 			canPlay = false;
 			this.setChanged();
 			this.notifyObservers();
@@ -91,21 +91,29 @@ public class TTTModel extends Observable {
 	}
 	
 	//checks the horizontal blocks if a user has won
+	/*
 	public boolean wonHor(){
 		for(int i = 0; i< size; i++){
 			for(int j =0; j<size-1; j++){
-				if((Board[i][j]!=(Board[i][j+1])) && Board[i][j] != "null") return false;
+				if((Board[i][j]!=(Board[i][j+1])) && Board[i][j] != null) return false;
 				}
 			}
 		return true;
 	}
+	*/
+	public boolean wonHor(int x){
+		for(int i = 0; i<this.size-1; i++){
+			if((Board[x][i]!=(Board[x][i+1])) && Board[x][i] != null) return false;
+
+		}
+		return true;
+	}
 	//checks the vertical blocks if a user has won
-	public boolean wonVet(){
-		for(int i = 0; i< size; i++){
-			for(int j = 0; j<size-1; j++){
-				if(Board[j][i] != Board[j+1][i] && Board[i][j] != "null") return false;
-				}
-			}
+	public boolean wonVet(int y){
+		for(int i = 0; i<this.size-1; i++){
+			if((Board[i][y]!=(Board[i+1][y])) && Board[i][y] != null) return false;
+
+		}
 		return true;
 	}
 	
@@ -121,8 +129,8 @@ public class TTTModel extends Observable {
 	} 
 	
 	//check if a player has won based on a move
-	public boolean playerWon(){
-		if(wonVet() || wonDiag() || wonHor()){ 
+	public boolean playerWon(int x, int y){
+		if(wonVet(y) || wonDiag() || wonHor(x)){ 
 			return true;} 
 		return false;
 	}

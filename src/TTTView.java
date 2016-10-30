@@ -39,14 +39,13 @@ public class TTTView extends JFrame implements Observer {
 	    resetButton = new JButton("Reset");
 	    resetButton.addActionListener(listener);
 	    jp2.add(resetButton);
-	    //resetButton.setActionCommand("reset");
 	    frame.getContentPane().add(jp2, BorderLayout.SOUTH);
-	    frame.setVisible(true);
+	    //frame.setVisible(true);
 	    
 	    
 	    for(int i = 0; i< size; i++){
 	    	for(int j = 0; j<size; j++){
-	    		buttons[i][j] = new JButton("");
+	    		buttons[i][j] = new JButton("*");
 	    		buttons[i][j].addActionListener(listener);
 	    		
 	    		jp.add(buttons[i][j]);

@@ -58,14 +58,17 @@ public class TTTModel extends Observable {
 					Board[x][y] = "O";
 					checker();
 				}
+				this.playerTurn();
+
+				this.setChanged();
+				this.notifyObservers();
 			}
+
 		}
+		
 		System.out.println(Arrays.deepToString(Board));
 		System.out.println(canPlay);
 
-		if(canPlay) { this.playerTurn(); }
-		this.setChanged();
-		this.notifyObservers();
 
 	}
 
@@ -87,7 +90,7 @@ public class TTTModel extends Observable {
 	
 	//returns the text for each block
 	public String getText(int x, int y){
-		if(Board[x][y] != null){
+		if(!Board[x][y].equals("*")){
 			return Board[x][y];
 		}
 		return "";
@@ -100,22 +103,13 @@ public class TTTModel extends Observable {
 		this.canPlay = true;
 		turn = true;		//player turn is set to true;
 		this.initBoard();
+		
 		this.setChanged();
 		this.notifyObservers();
 		
 	}
 	
-	//checks the horizontal blocks if a user has won
-	/*
-	public boolean wonHor(){
-		for(int i = 0; i< size; i++){
-			for(int j =0; j<size-1; j++){
-				if((Board[i][j]!=(Board[i][j+1])) && Board[i][j] != null) return false;
-				}
-			}
-		return true;
-	}
-	*/
+	//Checks the board horizontally if someone has won
 	public boolean wonHor(){
 		int count1 =0; 
 		int count2 =0;

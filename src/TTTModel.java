@@ -44,7 +44,7 @@ public class TTTModel extends Observable {
 		return this.size;
 	}
 	
-	//a user can play if the value at that block is null 
+	//a user can play if the value at that block is * 
 	public void play(int x, int y){
 		if(canPlay){
 			if(Board[x][y].equals("*")){

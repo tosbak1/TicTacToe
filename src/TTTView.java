@@ -45,7 +45,7 @@ public class TTTView extends JFrame implements Observer {
 	    
 	    for(int i = 0; i< size; i++){
 	    	for(int j = 0; j<size; j++){
-	    		buttons[i][j] = new JButton("*");
+	    		buttons[i][j] = new JButton("");
 	    		buttons[i][j].addActionListener(listener);
 	    		
 	    		jp.add(buttons[i][j]);
@@ -58,7 +58,7 @@ public class TTTView extends JFrame implements Observer {
 	}
 	
 	
-	//returns the reset button
+	//returns the reset button for use in the Controller
 	public JButton getResetButton(){
 		return this.resetButton;
 	}
